@@ -14,7 +14,7 @@ public class Square {
    public boolean BorderEnable = false;
    public int BorderWeight = 1;
    
-   private boolean clicked = false;
+   public boolean clicked = false;
    
    public String ButtonText = "";
    public int TextSize = 24;
@@ -47,7 +47,7 @@ public class Square {
    }
    
    private boolean overBox(int x, int y) {
-      if (x >= X && x <= X + W) {
+      if (x >= X && x <= X + H) {
          if (y >= Y && y <= Y + H) {
             return true;
          }

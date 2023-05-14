@@ -1,7 +1,7 @@
 public class TEXTBOX {
    public int X = 0, Y = 0, H = 35, W = 200;
    public int TEXTSIZE = 24;
-   
+   public String Name;
    // COLORS
    public color Background = color(140, 140, 140);
    public color Foreground = color(0, 0, 0);
@@ -14,7 +14,7 @@ public class TEXTBOX {
    public String Text = "";
    public int TextLength = 0;
 
-   private boolean selected = false;
+   public boolean selected = false;
    
    TEXTBOX() {
       // CREATE OBJECT DEFAULT TEXTBOX
@@ -82,7 +82,7 @@ public class TEXTBOX {
    }
    
    private void BACKSPACE() {
-      if (TextLength - 1 >= 0) {
+      if (TextLength - 1 > 0) {
          Text = Text.substring(0, TextLength - 1);
          TextLength--;
       }
@@ -103,6 +103,7 @@ public class TEXTBOX {
    void PRESSED(int x, int y) {
       if (overBox(x, y)) {
          selected = true;
+         Text = "";
       } else {
          selected = false;
       }
