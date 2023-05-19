@@ -2,6 +2,9 @@ ArrayList<TEXTBOX> textboxes = new ArrayList<TEXTBOX>();
 ArrayList<BUTTON> buttons = new ArrayList<BUTTON>();
 ArrayList<Square> squares = new ArrayList<Square>();
 ArrayList<Circle> circles = new ArrayList<Circle>();
+BUTTON squareButton;
+BUTTON circleButton;
+BUTTON confirmButton;
 
 boolean locked = false;
 String name = "";
@@ -32,11 +35,11 @@ void setup() {
    //TEXTBOX c = new TEXTBOX(300, 280, 200, 35);
    //larguraInput.BorderEnable = true;
    
-   BUTTON squareButton = new BUTTON(170, 100, 200, 35);
+   squareButton = new BUTTON(170, 100, 200, 35);
    squareButton.ButtonText = "Quadrado";
-   BUTTON circleButton = new BUTTON(430, 100, 200, 35);
+   circleButton = new BUTTON(430, 100, 200, 35);
    circleButton.ButtonText = "Círculo";
-   BUTTON confirmButton = new BUTTON(300, 350, 200, 35);
+   confirmButton = new BUTTON(300, 350, 200, 35);
    confirmButton.ButtonText = "Confirmar";
    
    textboxes.add(tamanhoInput);
@@ -107,11 +110,31 @@ void mousePressed() {
   int tamanhoRedefinido = 10;
    for (TEXTBOX t : textboxes) {
       t.PRESSED(mouseX, mouseY);
-      
-      if (t.Text == "Confirmar") {
-       //canDrawSquare = true; 
-      }
    }
+   
+   boolean pressed = squareButton.PRESSED(mouseX, mouseY);
+   if (!pressed && squareButton.clicked) {
+       squareButton.UNPRESSED();
+   }
+   circleButton.PRESSED(mouseX, mouseY);
+   
+   System.out.println("clicavel x " + squareButton.clicked);
+   System.out.println("clicavel y " + circleButton.clicked);
+   
+   if (squareButton.clicked) {
+      circleButton.clicked = false; 
+      circleButton.UNPRESSED();
+   } else{
+      squareButton.clicked = false; 
+      squareButton.UNPRESSED();
+   }
+   
+   
+   boolean pressionado = false;
+   //for (BUTTON b : buttons) {
+   //   b.RELEASED(mouseX, mouseY);
+     //b.PRESSED(mouseX, mouseY);
+   //}
    
    startX = mouseX;
    startY= mouseY;
@@ -123,18 +146,14 @@ void mousePressed() {
    }
    
    int rColor = 0, gColor = 0, bColor = 0;
+  
    
-   for (BUTTON b : buttons) {
-      b.PRESSED(mouseX, mouseY);
-      
-      
-       if (b.ButtonText == "Confirmar" && b.IsPressed) {
-          for (Square s : squares) {
+   if (confirmButton.IsPressed) {
+      if (squareButton.IsPressed) {
+        for (Square s : squares) {
           s.PRESSED(mouseX, mouseY);
           
           if (s.IsSelected) {
-              s.clicked = false;
-              s.IsSelected = false;
                for (TEXTBOX t : textboxes) {
                  switch(t.Name) {
                     case "Tamanho":
@@ -155,15 +174,15 @@ void mousePressed() {
                }
               s.H = tamanhoRedefinido;
               s.Background = color(rColor, gColor, bColor);
+              s.clicked = false;
+              s.IsSelected = false;
           }
-       }
-       
+        }
+      } else if (circleButton.IsPressed) {
           for (Circle c : circles) {
-          c.PRESSED(mouseX, mouseY);
+            c.PRESSED(mouseX, mouseY);
           
-          if (c.IsSelected) {
-              c.clicked = false;
-              c.IsSelected = false;
+            if (c.IsSelected) {
                for (TEXTBOX t : textboxes) {
                  switch(t.Name) {
                     case "Tamanho":
@@ -181,14 +200,29 @@ void mousePressed() {
                     default:
                       break;
                  }
-               }
+              }
               c.H = tamanhoRedefinido;
               c.Background = color(rColor, gColor, bColor);
-          }
-       }
-       b.IsPressed = false;
-       }
+              c.clicked = false;
+              c.IsSelected = false;
+            }
+         }
+      }
    }
+      
+      
+      // if (b.ButtonText == "Confirmar" && b.IsPressed) {
+      //    for (Square s : squares) {
+      //    s.PRESSED(mouseX, mouseY);
+          
+
+       //}
+       
+         //b.IsPressed = false;
+       //}
+   //}
+   
+   
    
       for (Square s : squares) {
         // se já está selecionado, deseleciona. Se nao diz que tá pressionado e carrega o tamanho pro input
@@ -247,22 +281,46 @@ void mousePressed() {
           
         }
    }
+   
+   System.out.println(squareButton.clicked);
+   System.out.println(circleButton.clicked);
+   if (squareButton.clicked) {
+      canDrawSquare = true;
+      canDrawCircle = false;
+      //circleButton.clicked = false;
+   } else if(circleButton.clicked) {
+      canDrawCircle = true;
+      canDrawSquare = false;
+      //squareButton.clicked = false;
+   }
 }
 
 void mouseReleased() {
-   for (BUTTON b : buttons) {
-      b.RELEASED(mouseX, mouseY);
+   //for (BUTTON b : buttons) {
+   //   b.RELEASED(mouseX, mouseY);
       
-      if (b.ButtonText == "Quadrado" && b.IsPressed) {
-         canDrawSquare = true;
-       } else if (b.ButtonText == "Círculo" && b.IsPressed) {
-         canDrawCircle = true;
-       }
-   }
+   //   if (b.ButtonText == "Quadrado" && b.IsPressed) {
+   //     strokeWeight(1);
+   //     System.out.println("entrou quadrado");
+   //      canDrawSquare = true;
+   //      canDrawCircle = false;
+   //    } else if (b.ButtonText == "Círculo" && b.IsPressed) {
+   //      System.out.println("entrou circulo");
+   //      canDrawCircle = true;
+   //      canDrawSquare = false;
+   //    }
+   //}
    
    finalX = mouseX;
    finalY = mouseY;
+   
+   for (BUTTON b : buttons) {
+     //b.RELEASED(mouseX, mouseY);
+   }
   
+   
+   //System.out.println(squareButton.clicked);
+   //System.out.println(circleButton.clicked);
    
    if (canDrawSquare) {
       if (startX != 0 && startY != 0 && (finalX - startX) != 0) {

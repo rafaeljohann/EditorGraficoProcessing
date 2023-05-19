@@ -58,11 +58,19 @@ public class BUTTON {
       return false;
    }
    
-   void PRESSED(int x, int y) {
+   boolean PRESSED(int x, int y) {
+       System.out.println("ENTROU ANTES " + ButtonText);
       if (overBox(x, y)) {
          clicked = true;
-         IsPressed = true;
+         System.out.println("ENTROU " + ButtonText);
+         return true;
+      } else {
+         return false; 
       }
+   }
+   
+   void UNPRESSED() {
+         clicked = false;
    }
    
    void RELEASED(int x, int y) {

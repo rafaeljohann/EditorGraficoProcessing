@@ -34,7 +34,7 @@ public class Circle {
       } else {
          stroke(Background);
       }
-      Desenhar(X, Y, H, 0, 0, 0);
+      Desenhar(X, Y, H);
       
    }
    
@@ -62,8 +62,8 @@ public class Circle {
       }
    }
    
-  void circlePoints(int cx, int cy, int x, int y, int colorCirc){
-  stroke(colorCirc);
+  void circlePoints(int cx, int cy, int x, int y){
+  strokeWeight(1);
   if (x == 0) {
     point(cx, cy + y);
     point(cx, cy - y);
@@ -88,12 +88,11 @@ public class Circle {
   }
 }
 
-void circleMidpoint(int xCenter, int yCenter, int radius, int colorCirc){
-  stroke(colorCirc);
+void circleMidpoint(int xCenter, int yCenter, int radius){
   int x = 0;
   int y = radius;
   int p = (5 - radius*4)/4;
-  circlePoints(xCenter, yCenter, x, y, colorCirc);
+  circlePoints(xCenter, yCenter, x, y);
   while (x < y) {
     x++;
     if (p < 0) {
@@ -102,11 +101,14 @@ void circleMidpoint(int xCenter, int yCenter, int radius, int colorCirc){
       y--;
       p += 2*(x-y)+1;
     }
-    circlePoints(xCenter, yCenter, x, y, colorCirc);
+    strokeWeight(2 * radius);
+    point(xCenter, yCenter);
+    strokeWeight(1);
+    circlePoints(xCenter, yCenter, x, y);
   }
 }
   
-  void Desenhar(int x, int y, int h, int r, int g, int b) {
-    circleMidpoint(x, y, h, 255);
+  void Desenhar(int x, int y, int h) {
+    circleMidpoint(x, y, h);
   }
  }
