@@ -2,52 +2,31 @@ public class Circle {
    public int X;
    public int Y;
    public int H;
-   public int W = 200;
-   
-   // COLORS
-   public color Background = color(0, 0, 0);
-   public color Foreground = color(255, 255, 255);
-   public color BackgroundClicked = color(242, 50, 50);
-   public color Border = color(30, 30, 30);
+   public color Background = color(255, 255, 255);
+   public color BackgroundClicked = color(24, 230, 224);
    public boolean IsSelected = false;
-   
-   public boolean BorderEnable = false;
-   public int BorderWeight = 1;
-   
-   public boolean clicked = false;
-   
-   public String ButtonText = "";
-   public int TextSize = 24;
+   public boolean clicked;
    
    Circle() {
-      // CREATE OBJECT DEFAULT BUTTON
    }
    
    Circle(int x, int y, int h) {
-      X = x; Y = y; H = h;
+      X = x; 
+      Y = y; 
+      H = h;
    }
    
    void DRAW() {
-      // DRAWING THE BACKGROUND
       if (clicked) {
          stroke(BackgroundClicked);
       } else {
          stroke(Background);
       }
-      Desenhar(X, Y, H);
-      
-   }
-   
-   // FUNCTION FOR TESTING IS THE POINT
-   // OVER THE BUTTON
-   
-   
-   void RELEASED(int x, int y) {
-      clicked = false;
+      Draw(X, Y, H);
    }
    
   private boolean overCircle(int xPos, int yPos, int xCircle, int yCircle, int circleWidth){
-    if(dist(xPos, yPos, xCircle, yCircle) <= circleWidth/2) {
+    if (dist(xPos, yPos, xCircle, yCircle) <= circleWidth) {
       return true;
     }
     else {
@@ -63,7 +42,6 @@ public class Circle {
    }
    
   void circlePoints(int cx, int cy, int x, int y){
-  strokeWeight(1);
   if (x == 0) {
     point(cx, cy + y);
     point(cx, cy - y);
@@ -101,14 +79,15 @@ void circleMidpoint(int xCenter, int yCenter, int radius){
       y--;
       p += 2*(x-y)+1;
     }
-    strokeWeight(2 * radius);
+    
+    strokeWeight(radius*2);
     point(xCenter, yCenter);
     strokeWeight(1);
     circlePoints(xCenter, yCenter, x, y);
   }
 }
   
-  void Desenhar(int x, int y, int h) {
+  void Draw(int x, int y, int h) {
     circleMidpoint(x, y, h);
   }
  }
