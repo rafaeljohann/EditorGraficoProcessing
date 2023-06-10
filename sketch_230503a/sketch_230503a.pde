@@ -45,14 +45,12 @@ void draw() {
    text("Desenhe abaixo!", (width - textWidth("Desenhe abaixo!")) / 2, 430);
    
    fill(250, 250, 250);
-      text("CRIADOR E EDITOR DE FORMAS", (width - textWidth("CRIADOR E EDITOR DE FORMAS")) / 2, 60);
+    text("CRIADOR E EDITOR DE FORMAS", (width - textWidth("CRIADOR E EDITOR DE FORMAS")) / 2, 60);
    textSize(15);
    text("Escolha a forma que você deseja desenhar", (width - textWidth("Escolha a forma que você deseja desenhar")) / 2, 80);
    
    for (BUTTON b : buttons) {
-     if (b.ButtonText != "Confirmar") {
        b.DRAW();
-     }
    }
    
    textSize(24);
